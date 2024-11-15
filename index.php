@@ -27,14 +27,15 @@ echo "</pre>";
 </head>
 <body>
 <main>
-        <h1>University of Bahrain - Student Nationalities</h1>
         <table>
             <thead>
                 <tr>
-                    <th>Student ID</th>
-                    <th>Nationality</th>
-                    <th>Program</th>
-                    <th>College</th>
+                        <th>Year</th>
+                        <th>Semester</th>
+                        <th>The Programs</th>
+                        <th>Nationality</th>
+                        <th>Colleges</th>
+                        <th>Number of Students</th>
                 </tr>
             </thead>
             <tbody>
@@ -42,10 +43,12 @@ echo "</pre>";
                 if (isset($data['records']) && is_array($data['records'])) {
                     foreach ($data['records'] as $record) {
                         echo "<tr>
-                                <td>{$record['student_id']}</td>
-                                <td>{$record['nationality']}</td>
-                                <td>{$record['program']}</td>
-                                <td>{$record['college']}</td>
+                                <td>{$record['fields']['year']}</td>
+                                <td>{$record['fields']['semester']}</td>
+                                <td>{$record['fields']['programs']}</td>
+                                <td>{$record['fields']['nationality']}</td>
+                                <td>{$record['fields']['college']}</td>
+                                <td>{$record['fields']['students']}</td>
                               </tr>";
                     }
                 }
