@@ -4,13 +4,12 @@ $response = file_get_contents($linkURL);
 if ($response === false) {
     die("Error: Unable to retrieve data from the API.");
 }
-
 $data = json_decode($response, true);
 
 if ($data === null) {
     die("Error: Unable to decode JSON. Check the API response format.");
 }
-$records=$data['records'];
+$records=$data['records'] ?? [];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -22,37 +21,36 @@ $records=$data['records'];
 </head>
 <body>
 <main>
-        <table>
-            <thead>
-                <tr>
-                        <th>Year</th>
-                        <th>Semester</th>
-                        <th>The Programs</th>
-                        <th>Nationality</th>
-                        <th>Colleges</th>
-                        <th>Number of Students</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php
-                    if (is_array($records)) {
-                        foreach ($records as $record) {
-                            $fields = $record['record']['fields']; // Handle missing keys gracefully
-                            echo "<tr>";
-                            echo "<td>{$fields['year']}</td>";
-                            echo "<td>{$fields['semester']}</td>";
-                            echo "<td>{$fields['program']}</td>";
-                            echo "<td>{$fields['nationality']}</td>";
-                            echo "<td>{$fields['college']}</td>";
-                            echo "<td>{$fields['student_count']}</td>";
-                            echo "</tr>";
-                        }
-                    } else {
-                        echo "No data to display.";
-                    }
-                ?>
-            </tbody>
-        </table>
+<?php
+        // Render table
+        echo '<table>';
+        echo '<thead>';
+        echo '<tr>';
+        echo '<th>Year</th>';
+        echo '<th>Semester</th>';
+        echo '<th>The Programs</th>';
+        echo '<th>Nationality</th>';
+        echo '<th>Colleges</th>';
+        echo '<th>Number of Students</th>';
+        echo '</tr>';
+        echo '</thead>';
+        echo '<tbody>';
+
+        foreach ($records as $record) {
+            $fields = $record['record']['fields'] ?? [];
+            echo '<tr>';
+            echo '<td>' . ($fields['year'] ?? 'N/A') . '</td>';
+            echo '<td>' . ($fields['semester'] ?? 'N/A') . '</td>';
+            echo '<td>' . ($fields['the_programs'] ?? 'N/A') . '</td>';
+            echo '<td>' . ($fields['nationality'] ?? 'N/A') . '</td>';
+            echo '<td>' . ($fields['colleges'] ?? 'N/A') . '</td>';
+            echo '<td>' . ($fields['number_of_students'] ?? 'N/A') . '</td>';
+            echo '</tr>';
+        }
+
+        echo '</tbody>';
+        echo '</table>';
+        ?>
     </main>
 </body>
 </html>
