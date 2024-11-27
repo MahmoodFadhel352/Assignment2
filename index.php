@@ -5,17 +5,12 @@ if ($response === false) {
     die("Error: Unable to retrieve data from the API.");
 }
 
-echo "<pre>";
-print_r($response);
-echo "</pre>";
 $data = json_decode($response, true);
 
 if ($data === null) {
     die("Error: Unable to decode JSON. Check the API response format.");
 }
-echo "<pre>";
-print_r($data); // Inspect the structure of the parsed data
-echo "</pre>";
+$records=$data['records'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -40,18 +35,21 @@ echo "</pre>";
             </thead>
             <tbody>
                 <?php
-                if (isset($data['records']) && is_array($data['records'])) {
-                    foreach ($data['records'] as $record) {
-                        echo "<tr>
-                                <td>{$record['fields']['year']}</td>
-                                <td>{$record['fields']['semester']}</td>
-                                <td>{$record['fields']['programs']}</td>
-                                <td>{$record['fields']['nationality']}</td>
-                                <td>{$record['fields']['college']}</td>
-                                <td>{$record['fields']['students']}</td>
-                              </tr>";
+                    if (is_array($records)) {
+                        foreach ($records as $record) {
+                            $fields = $record['record']['fields']; // Handle missing keys gracefully
+                            echo "<tr>";
+                            echo "<td>{$fields['year']}</td>";
+                            echo "<td>{$fields['semester']}</td>";
+                            echo "<td>{$fields['program']}</td>";
+                            echo "<td>{$fields['nationality']}</td>";
+                            echo "<td>{$fields['college']}</td>";
+                            echo "<td>{$fields['student_count']}</td>";
+                            echo "</tr>";
+                        }
+                    } else {
+                        echo "No data to display.";
                     }
-                }
                 ?>
             </tbody>
         </table>
