@@ -22,7 +22,8 @@ $records = $data['results'] ?? [];
     <title>UOB Students Data</title>
 </head>
 <body>
-    <main>
+    <!-- Responsive table fo Horizontal scrolling-->
+    <main style="overflow-x: auto;">
         <h1 style="text-align:center;">UOB Students Data</h1>
     <table>
         <!-- Table header display-->
